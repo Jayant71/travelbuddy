@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "342405145048",
+    "project_id": "buddytravel-app",
+    "storage_bucket": "buddytravel-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342405145048:android:5854e3a0eb03102d6412ad",
+        "android_client_info": {
+          "package_name": "com.travelbuddy.travelbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342405145048-rnvu9a6nnk7lddoe0oj67ushp19jjavf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travelbuddy.travelbuddy",
+            "certificate_hash": "7045f6b6b36174c2b80c518356da244aa8bf5900"
+          }
+        },
+        {
+          "client_id": "342405145048-q7dc0ls4940t85l6is44slcjkk8re4c8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4yHWCfiY2NP-4IX-47m1eWXEued-b5c0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342405145048-q7dc0ls4940t85l6is44slcjkk8re4c8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342405145048-avcd78luuq1n95gm0uch8vc935ijae35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.travelbuddy.travelbuddy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
