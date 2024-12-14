@@ -11,6 +11,13 @@ TravelBuddy is a Flutter mobile application that facilitates peer-to-peer delive
 - Profile management with delivery statistics
 - Reward points system for completed deliveries
 
+## A video demonstrating the above features
+
+
+
+https://github.com/user-attachments/assets/08305cfc-bb88-4d94-9ef3-b3c6102c33cb
+
+
 ## Tech Stack
 
 - Flutter & Dart
