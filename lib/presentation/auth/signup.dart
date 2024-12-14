@@ -123,16 +123,16 @@ class SignUpPage extends StatelessWidget {
                     context.showLoadingDialog();
                     sl<FirebaseAuthServices>()
                         .signUpWithEmailAndPassword(
-                      emailController.text,
-                      passwordController.text,
+                      emailController.text.trim(),
+                      passwordController.text.trim(),
                     )
                         .then((result) async {
                       if (context.mounted) {
                         if (result == "Success") {
                           await sl<FirebaseFirestoreServices>().createUser(User(
                               uid: sl<FirebaseAuthServices>().currentUser!.uid,
-                              name: nameController.text,
-                              email: emailController.text));
+                              name: nameController.text.trim(),
+                              email: emailController.text.trim()));
 
                           if (context.mounted) {
                             context.hideLoadingDialog();
@@ -142,10 +142,10 @@ class SignUpPage extends StatelessWidget {
                                     const Text('Account created successfully'),
                               ),
                             );
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => Dashboard(),
-                            ));
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => Dashboard()),
+                                (route) => false);
                           }
                         } else {
                           Navigator.of(context).pop();

@@ -68,10 +68,11 @@ class NamePage extends StatelessWidget {
 
                       if (context.mounted) {
                         context.hideLoadingDialog();
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) => Dashboard(),
                           ),
+                          (route) => false,
                         );
                       }
                     } catch (e) {

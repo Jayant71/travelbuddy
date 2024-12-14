@@ -83,8 +83,8 @@ class LoginPage extends StatelessWidget {
                     context.showLoadingDialog();
                     sl<FirebaseAuthServices>()
                         .signInWithEmailAndPassword(
-                      emailController.text,
-                      passwordController.text,
+                      emailController.text.trim(),
+                      passwordController.text.trim(),
                     )
                         .then((result) async {
                       if (context.mounted) {

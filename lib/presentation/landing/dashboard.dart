@@ -111,21 +111,6 @@ class _DashboardState extends State<Dashboard> {
                       ],
                     );
                   });
-              // context.showLoadingDialog();
-              // await Future.delayed(const Duration(seconds: 1));
-              // await sl<FirebaseAuthServices>().signOut();
-              // if (context.mounted) {
-              //   context.hideLoadingDialog();
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     const SnackBar(
-              //       content: Text('Logged out successfully'),
-              //     ),
-              //   );
-              //   Navigator.of(context)
-              //       .pushReplacement(MaterialPageRoute(builder: (context) {
-              //     return LoginPage();
-              //   }));
-              // }
             },
           ),
         ],
@@ -158,14 +143,17 @@ class _DashboardState extends State<Dashboard> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is DeliveryRequestsDartSuccess) {
                   if (state.deliveryRequests.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'No delivery requests available at the moment',
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                    return ListView(children: [
+                      SizedBox(height: MediaQuery.of(context).size.height / 3),
+                      const Center(
+                        child: Text(
+                          'No delivery requests available at the moment',
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
                       ),
-                    );
+                    ]);
                   }
 
                   return ListView.builder(
@@ -191,14 +179,17 @@ class _DashboardState extends State<Dashboard> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CompleteRequestsSuccess) {
                   if (state.completeRequests.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'No completed delivery requests found.',
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                    return ListView(children: [
+                      SizedBox(height: MediaQuery.of(context).size.height / 3),
+                      const Center(
+                        child: Text(
+                          'No completed delivery requests found.',
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
                       ),
-                    );
+                    ]);
                   }
 
                   return ListView.builder(
