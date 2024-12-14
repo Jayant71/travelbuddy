@@ -1,16 +1,63 @@
-# travelbuddy
+# TravelBuddy - Peer-to-Peer Delivery App
 
-A new Flutter project.
+TravelBuddy is a Flutter mobile application that facilitates peer-to-peer delivery services. Users can create delivery requests for items they need to be transported and other users can accept these requests to earn reward points.
+
+## Features
+
+- User authentication with email/password and Google Sign-in
+- Create and manage delivery requests
+- Accept delivery requests from other users
+- Track completed deliveries
+- Profile management with delivery statistics
+- Reward points system for completed deliveries
+
+## Tech Stack
+
+- Flutter & Dart
+- Firebase Authentication
+- Cloud Firestore
+- BLoC Pattern for state management
+- Dependency Injection using Service Locator
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository
+2. Configure Firebase project and add configuration files
+3. Run `flutter pub get` to install dependencies
+4. Run the app using `flutter run`
 
-A few resources to get you started if this is your first Flutter project:
+## Development Approach
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The development of TravelBuddy followed these key principles:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Architecture
+
+- Used BLoC pattern for state management to separate business logic from UI
+- Implemented clean architecture principles with clear separation of concerns
+- Utilized repository pattern for data management
+
+### Firebase Integration
+
+- Leveraged Firebase Authentication for secure user management
+- Used Cloud Firestore for real-time data storage and synchronization
+- Implemented efficient querying for delivery requests
+
+### User Experience
+
+- Created an intuitive UI for easy navigation
+- Implemented real-time updates for delivery status changes
+- Added loading states and error handling for better user feedback
+
+### Code Organization
+
+- Structured code into logical modules (auth, landing, profile)
+- Used cubit for simpler state management when applicable
+- Maintained consistent coding patterns throughout the project
+
+## Future Improvements
+
+- Add real-time location tracking
+- Implement chat functionality between users
+- Add payment integration
+- Enhance the reward system
+- Add push notifications
