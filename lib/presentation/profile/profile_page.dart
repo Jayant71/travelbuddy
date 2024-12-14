@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelbuddy/data/models/user.dart';
 import 'package:travelbuddy/data/sources/firebase_auth_services.dart';
 import 'package:travelbuddy/presentation/auth/cubit/user_cubit.dart';
 import 'package:travelbuddy/service_locator.dart';

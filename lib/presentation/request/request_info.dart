@@ -146,14 +146,18 @@ Widget _buildAcceptButton(BuildContext context, DeliveryRequest request) {
     width: double.infinity,
     child: ElevatedButton(
       onPressed: () async {
-        print(request.id);
-        print(sl<FirebaseAuthServices>().currentUser!.email);
-        var result = await sl<FirebaseFirestoreServices>()
+        await sl<FirebaseFirestoreServices>()
             .updateDeliveryRequest(id: request.id, data: {
           'status': 'accepted',
           'assignedTo': sl<FirebaseAuthServices>().currentUser!.email
+        }).then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Delivery request accepted!'),
+              backgroundColor: Colors.green,
+            ),
+          );
         });
-        print(result);
         context.read<DeliveryRequestsDartCubit>().getDeliveryRequests();
         Navigator.of(context).pop();
       },
@@ -178,12 +182,21 @@ Widget _buildCompleteButton(BuildContext context, DeliveryRequest request) {
         sl<FirebaseFirestoreServices>()
             .updateDeliveryRequest(id: request.id, data: {
           'status': 'completed',
+        }).then((value) {
+          sl<FirebaseFirestoreServices>()
+              .updateUser(id: deliveryUser!.uid, data: {
+            'rewardPoints': deliveryUser.rewardPoints + request.rewardPoints,
+            'completedDeliveries': deliveryUser.completedDeliveries + 1
+          }).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Delivery request completed!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          });
         });
-        sl<FirebaseFirestoreServices>()
-            .updateUser(id: deliveryUser!.uid, data: {
-          'rewardPoints': deliveryUser.rewardPoints + request.rewardPoints,
-          'completedDeliveries': deliveryUser.completedDeliveries + 1
-        });
+
         if (context.mounted) {
           context.read<DeliveryRequestsDartCubit>().getDeliveryRequests();
           context.read<CompleteRequestsCubit>().getCompleteRequests(

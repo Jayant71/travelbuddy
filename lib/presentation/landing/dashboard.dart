@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelbuddy/data/models/user.dart';
 import 'package:travelbuddy/data/sources/firebase_auth_services.dart';
-import 'package:travelbuddy/data/sources/firebase_firestore_services.dart';
 import 'package:travelbuddy/helpers/loading.dart';
 import 'package:travelbuddy/presentation/auth/cubit/user_cubit.dart';
 import 'package:travelbuddy/presentation/auth/login.dart';
@@ -66,16 +63,69 @@ class _DashboardState extends State<Dashboard> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              context.showLoadingDialog();
-              await sl<FirebaseAuthServices>().signOut();
-              if (context.mounted) {
-                context.hideLoadingDialog();
-
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: (context) {
-                  return LoginPage();
-                }));
-              }
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Logout'),
+                      content: const Text('Are you sure you want to logout?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            context.showLoadingDialog();
+                            await Future.delayed(const Duration(seconds: 1));
+                            await sl<FirebaseAuthServices>()
+                                .signOut()
+                                .then((value) {
+                              if (context.mounted) {
+                                context.hideLoadingDialog();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Logged out successfully'),
+                                  ),
+                                );
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoginPage();
+                                }));
+                              }
+                            }).onError((error, stackTrace) {
+                              if (context.mounted) {
+                                context.hideLoadingDialog();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error: $error'),
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                          child: const Text('Logout'),
+                        ),
+                      ],
+                    );
+                  });
+              // context.showLoadingDialog();
+              // await Future.delayed(const Duration(seconds: 1));
+              // await sl<FirebaseAuthServices>().signOut();
+              // if (context.mounted) {
+              //   context.hideLoadingDialog();
+              //   ScaffoldMessenger.of(context).showSnackBar(
+              //     const SnackBar(
+              //       content: Text('Logged out successfully'),
+              //     ),
+              //   );
+              //   Navigator.of(context)
+              //       .pushReplacement(MaterialPageRoute(builder: (context) {
+              //     return LoginPage();
+              //   }));
+              // }
             },
           ),
         ],

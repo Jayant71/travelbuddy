@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 const List<String> scopes = <String>[
   'email',
-  'https://www.googleapis.com/auth/contacts.readonly',
 ];
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -23,7 +22,25 @@ class FirebaseAuthServices {
         // User canceled the sign-in flow
         return "Canceled";
       }
-      return "Success";
+
+      // Get authentication credentials
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in to Firebase with the Google credential
+      final UserCredential userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+
+      // Check if the user is new or existing
+      if (userCredential.additionalUserInfo?.isNewUser ?? false) {
+        return "NewUser";
+      } else {
+        return "ExistingUser";
+      }
     } catch (e) {
       debugPrint(e.toString());
       return "Failed";
@@ -60,5 +77,7 @@ class FirebaseAuthServices {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+    await _googleSignIn.signOut();
+    // await _googleSignIn.disconnect();
   }
 }

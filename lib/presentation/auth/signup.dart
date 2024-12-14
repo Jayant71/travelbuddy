@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:travelbuddy/data/models/user.dart';
 import 'package:travelbuddy/data/sources/firebase_auth_services.dart';
 import 'package:travelbuddy/data/sources/firebase_firestore_services.dart';
 import 'package:travelbuddy/helpers/loading.dart';
 import 'package:travelbuddy/presentation/auth/login.dart';
+import 'package:travelbuddy/presentation/auth/namepage.dart';
 import 'package:travelbuddy/presentation/landing/dashboard.dart';
 import 'package:travelbuddy/service_locator.dart';
 
@@ -166,49 +167,49 @@ class SignUpPage extends StatelessWidget {
                 ),
                 child: const Text('Sign Up'),
               ),
-              // const SizedBox(height: 16),
-              // OutlinedButton.icon(
-              //   onPressed: () async {
-              //     context.showLoadingDialog();
-              //     final result = await sl<FirebaseAuthServices>()
-              //         .signInWithGoogle()
-              //         .then((result) async {
-              //       await sl<FirebaseFirestoreServices>().createUser(User(
-              //           name: nameController.text,
-              //           email: sl<FirebaseAuthServices>().currentUser!.email!));
-              //     });
+              const SizedBox(height: 16),
+              OutlinedButton.icon(
+                onPressed: () async {
+                  context.showLoadingDialog();
+                  final result =
+                      await sl<FirebaseAuthServices>().signInWithGoogle();
 
-              //     if (context.mounted) {
-              //       if (result == "Success") {
-              //         context.hideLoadingDialog();
-              //         Navigator.of(context).pushReplacement(MaterialPageRoute(
-              //           builder: (context) => Dashboard(),
-              //         ));
-              //       } else if (result == "Failed") {
-              //         context.hideLoadingDialog();
-              //         ScaffoldMessenger.of(context).showSnackBar(
-              //           SnackBar(
-              //             content: Text(result!),
-              //           ),
-              //         );
-              //       } else {
-              //         Navigator.of(context).pop();
-              //       }
-              //     }
-              //   },
-              //   icon: SvgPicture.asset(
-              //     'assets/google_logo.svg',
-              //     width: 24,
-              //     height: 24,
-              //   ),
-              //   label: const Text('Sign up with Google'),
-              //   style: OutlinedButton.styleFrom(
-              //     padding: const EdgeInsets.symmetric(vertical: 16),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(12),
-              //     ),
-              //   ),
-              // ),
+                  if (context.mounted) {
+                    if (result == "ExistingUser") {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => Dashboard(),
+                      ));
+                    } else if (result == "NewUser") {
+                      context.hideLoadingDialog();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => NamePage(),
+                      ));
+                    } else if (result == "Failed") {
+                      context.hideLoadingDialog();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(result!),
+                        ),
+                      );
+                    } else {
+                      Navigator.of(context).pop();
+                    }
+                  }
+                },
+                icon: SvgPicture.asset(
+                  'assets/google_logo.svg',
+                  width: 24,
+                  height: 24,
+                ),
+                label: const Text('Sign up with Google'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
